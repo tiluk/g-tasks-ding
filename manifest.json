@@ -1,0 +1,24 @@
+{
+    "manifest_version": 3,
+    "name": "Specific Element Click Listener",
+    "version": "1.0",
+    "description": "Listens for clicks on a specific element on a webpage.",
+    "permissions": [
+        "activeTab",
+        "scripting"
+    ],
+    "action": {
+        "default_popup": "popup.html"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "*://calendar.google.com/calendar/u/*/r/tasks",
+                "*://tasks.google.com/tasks/*"
+            ],
+            "js": [
+                "content.js"
+            ]
+        }
+    ]
+}
