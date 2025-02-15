@@ -1,26 +1,31 @@
-let offscreenDocumentCreated = false;
+let creating;
+async function createOffscreenDocument(path) {
+  const offscreenUrl = chrome.runtime.getURL(path);
+  const existingContexts = await chrome.runtime.getContexts({
+    contextTypes: ["OFFSCREEN_DOCUMENT"],
+    documentUrls: [offscreenUrl],
+  });
 
-async function createOffscreenDocument() {
-  if (offscreenDocumentCreated) {
+  if (existingContexts.length > 0) {
     return;
   }
 
-  try {
-    await chrome.offscreen.createDocument({
-      url: 'offscreen.html',
-      reasons: ['AUDIO_PLAYBACK'],
-      justification: 'Play ding sound when task is checked off',
+  if (creating) {
+    await creating;
+  } else {
+    creating = chrome.offscreen.createDocument({
+      url: path,
+      reasons: ["AUDIO_PLAYBACK"],
+      justification: "Play ding sound when task is checked off",
     });
-    offscreenDocumentCreated = true;
-    console.log("Offscreen document created");
-  } catch (error) {
-    console.error("Error creating offscreen document:", error);
+    await creating;
+    creating = null;
   }
 }
 
 chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
   if (message.action === "playSound") {
-    await createOffscreenDocument();
+    await createOffscreenDocument("offscreen.html");
     chrome.runtime.sendMessage({ target: "offscreen", action: "playSound" });
   }
 });
