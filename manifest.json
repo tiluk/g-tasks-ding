@@ -14,5 +14,6 @@
   ],
   "permissions": [
     "offscreen"
-  ]
+  ],
+  "minimum_chrome_version": "109"
 }
