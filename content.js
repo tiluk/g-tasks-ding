@@ -1,14 +1,18 @@
-let ariaLabelLang = "";
-const lang = document.documentElement.getAttribute("lang");
-if (lang === "en-US") {
-  ariaLabelLang = "Mark completed";
-} else if (lang === "de") {
-  ariaLabelLang = "Erledigt";
-} else {
-  console.log("Unsupported language:", lang);
+function getAriaLabel() {
+  const lang = document.documentElement.getAttribute("lang");
+
+  switch (lang) {
+    case "en-US":
+      return "Mark completed";
+    case "de":
+      return "Erledigt";
+    default:
+      console.log("Unsupported language:", lang);
+      return "";
+  }
 }
 
-const targetElementSelector = 'button[aria-label="' + ariaLabelLang + '"]';
+const targetElementSelector = `button[aria-label="${getAriaLabel()}"]`;
 const ding = new Audio("sounds/ding.mp3");
 
 function setupClickListeners() {
