@@ -1,7 +1,4 @@
-console.log("Content script injected.");
-
 let ariaLabelLang = "";
-
 const lang = document.documentElement.getAttribute("lang");
 if (lang === "en-US") {
   ariaLabelLang = "Mark completed";
