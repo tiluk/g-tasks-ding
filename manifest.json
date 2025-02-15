@@ -1,24 +1,18 @@
 {
-    "manifest_version": 3,
-    "name": "Specific Element Click Listener",
-    "version": "1.0",
-    "description": "Listens for clicks on a specific element on a webpage.",
-    "permissions": [
-        "activeTab",
-        "scripting"
-    ],
-    "action": {
-        "default_popup": "popup.html"
-    },
-    "content_scripts": [
-        {
-            "matches": [
-                "*://calendar.google.com/calendar/u/*/r/tasks",
-                "*://tasks.google.com/tasks/*"
-            ],
-            "js": [
-                "content.js"
-            ]
-        }
-    ]
+  "manifest_version": 3,
+  "name": "G Tasks Ding",
+  "version": "1.0",
+  "description": "Plays a satisfying ding sound when you mark a task as completed in Google Tasks.",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://tasks.google.com/tasks/*"],
+      "js": ["content.js"]
+    }
+  ],
+  "permissions": [
+    "offscreen"
+  ]
 }

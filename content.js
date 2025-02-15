@@ -18,7 +18,6 @@ function setupClickListeners() {
   const targetElements = document.querySelectorAll(targetElementSelector);
 
   if (targetElements.length > 0) {
-    console.log("Target elements found:", targetElements);
     targetElements.forEach((targetElement) => {
       if (!targetElement.hasAttribute("data-listener-added")) {
         targetElement.addEventListener("click", handleClick);
@@ -26,14 +25,12 @@ function setupClickListeners() {
       }
     });
   } else {
-    console.log("Target elements not found yet. Trying again...");
     setTimeout(setupClickListeners, 1000);
   }
 }
 
 function handleClick(event) {
-  console.log("You checked off a task! 🎉");
-  ding.play();
+  chrome.runtime.sendMessage({ action: "playSound" });
 }
 
 setupClickListeners();
